@@ -4,6 +4,7 @@ __pycache__/
 *.pyc
 outputs/
 models/
-venv310/
+.venv310/
+
 
 
