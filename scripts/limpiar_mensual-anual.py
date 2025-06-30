@@ -1,64 +1,80 @@
 import json
 import pandas as pd
 import os
-import unicodedata
+import re
 
 # Rutas
-carpeta_entrada = 'src/data/originales/AEMET/alcantarilla/mensual-anual/'
+carpeta_entrada = 'src/data/originales/AEMET/alcantarilla/mensuales-anuales/'
 carpeta_salida = 'src/data/limpios/'
-
-# Crear carpeta de salida si no existe
 os.makedirs(carpeta_salida, exist_ok=True)
 
 # Columnas numéricas a limpiar
 columnas_numericas = [
-    'tmed', 'prec', 'tmin', 'tmax',
-    'velmedia', 'racha', 'presMax', 'presMin',
-    'hrMedia', 'hrMax', 'hrMin', 'sol'
+    'p_max', 'n_cub', 'hr', 'n_gra', 'n_fog', 'inso', 'q_max', 'nw_55', 'q_mar', 'q_med',
+    'tm_min', 'ta_max', 'ts_min', 'nt_30', 'nv_0050', 'n_des', 'np_100', 'n_nub', 'p_sol',
+    'nw_91', 'np_001', 'ta_min', 'e', 'np_300', 'nv_1000', 'evap', 'p_mes', 'n_llu', 'n_tor',
+    'nt_00', 'ti_max', 'n_nie', 'tm_mes', 'tm_max', 'nv_0100', 'q_min', 'np_010'
 ]
 
-def normalizar_texto(texto):
-    if not isinstance(texto, str):
-        return texto
-    texto = unicodedata.normalize('NFKD', texto)
-    texto = texto.encode('ASCII', 'ignore').decode('ASCII')
-    return texto
+def limpiar_valor(valor):
+    if not isinstance(valor, str):
+        return valor
+    valor = re.sub(r'\(.*?\)', '', valor)  # Quitar paréntesis y su contenido
+    valor = valor.replace(',', '.')        # Convertir coma en punto
+    return valor.strip()
 
-def limpiar_archivo(ruta_archivo, ruta_salida):
-    try:
-        with open(ruta_archivo, 'r', encoding='latin1') as f:
-            datos = json.load(f)
+# DataFrames acumulativos
+mensuales_df = pd.DataFrame()
+anuales_df = pd.DataFrame()
 
-        df = pd.DataFrame(datos)
+# Procesar archivos
+for archivo in os.listdir(carpeta_entrada):
+    if archivo.endswith('.txt'):
+        ruta = os.path.join(carpeta_entrada, archivo)
+        try:
+            with open(ruta, 'r', encoding='latin1') as f:
+                datos = json.load(f)
 
-        # Limpiar columnas numéricas
-        for col in columnas_numericas:
-            if col in df.columns:
-                df[col] = pd.to_numeric(df[col].str.replace(',', '.', regex=False), errors='coerce')
+            df = pd.DataFrame(datos)
 
-        # Convertir fecha
-        if 'fecha' in df.columns:
-            df['fecha'] = pd.to_datetime(df['fecha'], format='%Y-%m-%d')
+            # Limpiar columnas numéricas
+            for col in columnas_numericas:
+                if col in df.columns:
+                    df[col] = df[col].apply(limpiar_valor)
+                    df[col] = pd.to_numeric(df[col], errors='coerce')
 
-        # Normalizar texto en 'nombre'
-        if 'nombre' in df.columns:
-            df['nombre'] = df['nombre'].apply(normalizar_texto)
+            # Extraer anio y mes
+            if 'fecha' in df.columns:
+                df['fecha'] = df['fecha'].astype(str)
+                df['anio'] = df['fecha'].apply(lambda x: int(x.split('-')[0]) if '-' in x else None)
+                df['mes'] = df['fecha'].apply(lambda x: int(x.split('-')[1]) if '-' in x else None)
 
-        df.to_csv(ruta_salida, index=False, encoding='utf-8-sig')
-        print(f"✅ Archivo limpio guardado: {ruta_salida}")
+                # Generar campo fecha solo si el mes es válido (1-12)
+                df['fecha'] = df.apply(
+                    lambda row: pd.to_datetime(f"{row['anio']}-{row['mes']:02}-01") 
+                    if pd.notnull(row['anio']) and pd.notnull(row['mes']) and 1 <= row['mes'] <= 12
+                    else pd.NaT,
+                    axis=1
+                )
 
-    except Exception as e:
-        print(f"❌ Error procesando {ruta_archivo}: {e}")
+                # Separar registros
+                mensuales = df[df['mes'] <= 12]
+                anuales = df[df['mes'] == 13]
 
-def main():
-    archivos = [f for f in os.listdir(carpeta_entrada) if f.endswith('.txt')]
+                mensuales_df = pd.concat([mensuales_df, mensuales], ignore_index=True)
+                anuales_df = pd.concat([anuales_df, anuales], ignore_index=True)
 
-    for archivo in archivos:
-        ruta_archivo = os.path.join(carpeta_entrada, archivo)
-        nombre_salida = archivo.replace(' ', '_').replace('.txt', '.csv')
-        ruta_salida = os.path.join(carpeta_salida, nombre_salida)
+            print(f"✅ Procesado: {archivo}")
 
-        limpiar_archivo(ruta_archivo, ruta_salida)
+        except Exception as e:
+            print(f"❌ Error en {archivo}: {e}")
 
-if __name__ == "__main__":
-    main()
+# Ordenar antes de guardar
+mensuales_df = mensuales_df.sort_values(by=['anio', 'mes'])
+anuales_df = anuales_df.sort_values(by='anio')
+
+# Guardar resultados
+mensuales_df.to_csv(os.path.join(carpeta_salida, 'mensuales.csv'), index=False, encoding='utf-8-sig')
+anuales_df.to_csv(os.path.join(carpeta_salida, 'anuales.csv'), index=False, encoding='utf-8-sig')
+
+print("\n✅ Archivos guardados correctamente: mensuales.csv y anuales.csv")
