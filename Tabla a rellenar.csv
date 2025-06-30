@@ -1,0 +1,15 @@
+fecha,precipitacion_mm,temperatura_media_c,caudal_segura_m3s,nivel_embalse_m,humedad_suelo_pct,inundacion
+2020-01-01,2.5,12.3,35.2,3.5,45,0
+día,llovió 2.5mm ese día,en celsius,del río Segura,agua acumulada en metros,el suelo tenia 45% de humedad ese día,"no hubo; 0=No, 1=Si"
+,,,,,,
+,,,,,,
+,,,,,,
+Variable,Fuente posible,,,,,
+Precipitación y temperatura,AEMET,,,,,
+Caudal del Segura,CHS (Conf. Hidrográfica del Segura),,,,,
+Inundaciones registradas,"Prensa regional, Protección Civil",,,,,
+
+Tipo de dato	Periodo recomendado	Por qué
+Datos diarios	Últimos 5 a 10 años (2015–2025)	Capturar variabilidad diaria, lluvias intensas y su relación con inundaciones. Es la base principal.
+Datos mensuales	Mismo rango, 5-10 años	Para tendencias generales y análisis estacional más sencillo.
+Datos anuales	10-20 años si es posible	Para análisis a largo plazo y ver si las condiciones climáticas cambian (cambio climático, etc).
