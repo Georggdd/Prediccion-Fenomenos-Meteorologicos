@@ -1,0 +1,5 @@
+﻿fecha,nombre_estacion,tm_min,tm_max,tm_mes,ta_min,ta_max,p_mes,p_max,inso,p_sol
+2018-01-01,San Javier Aeropuerto,14.0,22.9,18.4,1.0,36.5,291.5,38.0(14/sep),,
+2019-01-01,San Javier Aeropuerto,13.4,23.0,18.2,-0.7,36.5,522.0,204.7(12/sep),,
+2020-01-01,San Javier Aeropuerto,13.8,23.1,18.5,1.0,35.1,309.6,66.0(23/mar),8.5,69.0
+2024-01-01,San Javier Aeropuerto,14.5,23.7,19.2,1.0,37.5,189.0,26.9(12/nov),,

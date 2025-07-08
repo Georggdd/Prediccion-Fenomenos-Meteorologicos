@@ -1,0 +1,4 @@
+﻿fecha,nombre_estacion,tm_min,tm_max,tm_mes,ta_min,ta_max,p_mes,p_max,hr,w_med,w_racha,w_rec
+2022-01-01,Cartagena/Salinas Cabo de Palos,,,,,,,,,,,
+2023-01-01,Cartagena/Salinas Cabo de Palos,,,,,,235.6,107.8(22/may),,,,
+2024-01-01,Cartagena/Salinas Cabo de Palos,15.9,23.1,19.6,3.7,35.8,179.4,31.4(12/jun),72.0,16.0,22/24.4(27/mar),338
