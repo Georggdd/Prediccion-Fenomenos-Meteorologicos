@@ -1,0 +1,51 @@
+[
+  {
+    "indicativo": "7019X",
+    "fecha": "2022-13",
+    "nombre_estacion": "Cartagena/Salinas Cabo de Palos"
+  },
+  {
+    "indicativo": "7019X",
+    "p_max": "107.8(22/may)",
+    "n_cub": "66",
+    "n_des": "120",
+    "np_100": "4",
+    "n_nub": "179",
+    "np_001": "42",
+    "np_300": "2",
+    "p_mes": "235.6",
+    "np_010": "24",
+    "fecha": "2023-13",
+    "nombre_estacion": "Cartagena/Salinas Cabo de Palos"
+  },
+  {
+    "indicativo": "7019X",
+    "p_max": "31.4(12/jun)",
+    "n_cub": "65",
+    "hr": "72",
+    "nw_55": "39",
+    "tm_min": "15.9",
+    "ta_max": "35.8(21/jul)",
+    "ts_min": "27.3",
+    "nt_30": "41",
+    "n_des": "152",
+    "w_racha": "22/24.4(27/mar)",
+    "np_100": "6",
+    "n_nub": "146",
+    "nw_91": "0",
+    "np_001": "42",
+    "ta_min": "3.7(22/dic)",
+    "w_rec": "338",
+    "e": "178",
+    "np_300": "1",
+    "p_mes": "179.4",
+    "w_med": "16",
+    "nt_00": "0",
+    "ti_max": "13.3",
+    "tm_mes": "19.6",
+    "tm_max": "23.1",
+    "np_010": "23",
+    "fecha": "2024-13",
+    "nombre_estacion": "Cartagena/Salinas Cabo de Palos"
+  }
+]
