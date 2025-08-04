@@ -4,6 +4,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import glob
+import os
 
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LinearRegression
@@ -21,9 +23,15 @@ st.title("🌦️ Visualización de modelos climáticos - Alcantarilla (Murcia)"
 # Cargar datos
 @st.cache_data
 def cargar_datos():
-    diarios = pd.read_csv('src/data/limpios/AEMET/alcantarilla/diarios/diarios.csv')
-    mensuales = pd.read_csv('src/data/limpios/AEMET/alcantarilla/mensuales-anuales/mensuales.csv')
-    anuales = pd.read_csv('src/data/limpios/AEMET/alcantarilla/mensuales-anuales/anuales.csv')
+    ruta_diarios = 'src/data/limpios/AEMET/limpios/diarios/*.csv'
+    ruta_mensuales = 'src/data/limpios/AEMET/limpios/mensuales/*.csv'
+    ruta_anuales = 'src/data/limpios/AEMET/limpios/anuales/*.csv'  # Asegúrate de que esta ruta sea correcta
+
+    # Cargar y concatenar todos los CSV en cada carpeta
+    diarios = pd.concat([pd.read_csv(f) for f in glob.glob(ruta_diarios)], ignore_index=True)
+    mensuales = pd.concat([pd.read_csv(f) for f in glob.glob(ruta_mensuales)], ignore_index=True)
+    anuales = pd.concat([pd.read_csv(f) for f in glob.glob(ruta_anuales)], ignore_index=True)
+
     return diarios, mensuales, anuales
 
 df_diarios, df_mensuales, df_anuales = cargar_datos()

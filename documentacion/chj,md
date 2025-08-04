@@ -1,0 +1,10 @@
+-ir a la web oficial: wwww.chsegura.es
+-ir a cuenca y seleccinar cuenca de control.
+-en el apartado de estadísticas hidrológicas salen varios apartados:
+     1º para consultar datos sobre los embalses pulsamos en consulta de series de embalses, seleccionamos los embalses más 
+     importantes para la zona que necesitamos y la fecha desde 01/01/2015-30/06/2025 y descargamos los datos en formato csv.
+     EB-006 Embalse de Fuensanta
+     EB-009 Embalse del Cenajo
+     EB-004 Embalse de Talave
+     EB-010 Embalse de Camarillas
+-creamos un script para limpiar los datos csv.
