@@ -1,12 +1,22 @@
 # Predicción de Fenómenos Meteorológicos
 
-Este proyecto tiene como objetivo predecir fenómenos meteorológicos extremos utilizando técnicas de Machine Learning e Inteligencia Artificial.
+📌 Descripción
 
-# 🌦️ Visualización de Modelos Climáticos con Streamlit
+Este proyecto desarrolla un sistema predictivo para fenómenos meteorológicos extremos en la Región de Murcia, centrado en lluvias intensas y DANA, y sus consecuencias como inundaciones.
 
-Este proyecto tiene como objetivo analizar y predecir fenómenos meteorológicos en la estación de **Alcantarilla (Murcia)** utilizando técnicas de Machine Learning y Deep Learning, y mostrar los resultados de forma interactiva mediante una app construida con **Streamlit**.
+Se integran datos históricos de AEMET y CHS (2015–2025) y se aplican modelos de IA y Big Data. Además, incluye una aplicación web interactiva en Streamlit para explorar predicciones y variables climáticas/hidrológicas.
 
----
+🎯 Objetivos
+
+Clasificar días con lluvia intensa.
+
+Estimar la cantidad de precipitación en días lluviosos.
+
+Predecir la evolución temporal de la temperatura media.
+
+Visualizar resultados de forma interactiva.
+
+Demostrar el uso de IA y Big Data para gestión de riesgos climáticos.
 
 ## 🚀 ¿Qué es Streamlit?
 
@@ -16,102 +26,113 @@ Con una sola línea (`streamlit run app.py`), puedes visualizar datos, resultado
 
 ---
 
-## 🧠 Fases del proyecto
+🛠️ Metodología
+<details> <summary><b>1. Recolección de datos</b></summary>
 
-### 1. 🔍 Obtención y limpieza de los datos
+AEMET: Datos diarios (2015–2025) de todas las estaciones de Murcia vía API REST. Se transformaron de JSON a CSV y se limpiaron variables clave: temperatura mínima, máxima y media, precipitación y humedad relativa.
 
-- Se han descargado datos climáticos diarios, mensuales y anuales de la AEMET.
-- Se han unificado, filtrado y limpiado los datos de la estación meteorológica de Alcantarilla.
-- Los datos se guardan en formato `.csv` dentro de la carpeta `/src/data/limpios/`.
+CHS: Datos hidrológicos diarios (caudales, niveles de ríos y embalses) descargados en CSV y limpiados para integrarlos con los datos meteorológicos.
 
-Tamaños de los datasets:
-- **Diarios**: 3830 registros, 25 variables.
-- **Mensuales**: 132 registros, 44 variables.
-- **Anuales**: 11 registros, 44 variables.
+</details> <details> <summary><b>2. Preprocesamiento</b></summary>
 
----
+Unificación de datos en un dataframe consolidado.
 
-### 2. 🧪 Entrenamiento de modelos
+Limpieza de valores faltantes (reemplazo por medianas).
 
-#### 🌧️ Clasificación: ¿Llovió o no?
-- Variable objetivo: `prec > 0 → lluvia = 1`, `prec = 0 → lluvia = 0`
-- Modelo: Árbol de Decisión (`DecisionTreeClassifier`)
-- Precisión:
-  - Entrenamiento: **100%**
-  - Prueba: **84%**
+Normalización de variables numéricas.
 
-#### 🌧️📈 Regresión: Cantidad de lluvia (solo días lluviosos)
-- Variable objetivo: `prec` (precipitación en mm)
-- Modelo: Regresión Lineal
-- R²:
-  - Entrenamiento: **0.17**
-  - Prueba: **0.07**
+Construcción de variables temporales (día, mes, estación del año) y variable binaria inundación (precipitación ≥ 20 mm).
 
-#### 🌡️ Serie temporal: Predicción de temperatura media diaria
-- Variable objetivo: `tmed` del día siguiente
-- Modelo: Red LSTM con ventana deslizante de 5 días
-- Preprocesamiento:
-  - Escalado entre 0 y 1
-  - Conversión a secuencias (`X`, `y`)
-- Métrica: **Error cuadrático medio (`MSE`)**
-- Observación: buen ajuste sin sobreajuste, validación estable
+</details> <details> <summary><b>3. Modelado</b></summary>
 
----
+Árbol de decisión → Clasificación lluvia/no lluvia (precisión, recall, F1).
 
-### 3. 📊 Visualización interactiva con Streamlit
+Regresión lineal → Estimación de precipitación (MSE).
 
-La app `app.py` permite visualizar de forma dinámica:
+Red neuronal LSTM → Predicción de temperatura media (RMSE).
 
-#### 🗂️ Datos diarios
-- Gráficos de evolución temporal de cualquier variable (ej: temperatura, presión, humedad...).
+Random Forest → Predicción de inundaciones, balanceo con SMOTE, búsqueda de hiperparámetros, importancia de variables.
 
-#### 🤖 Clasificación (Árbol de decisión)
-- Precisión en entrenamiento y prueba
-- Matriz de confusión visual
+</details> <details> <summary><b>4. Visualización</b></summary>
 
-#### 🔬 Regresión (precipitación)
-- Comparación entre valores reales y predichos
-- R² en entrenamiento y test
-- Gráfico de dispersión
+Streamlit: Aplicación interactiva para consultar probabilidades de inundación y explorar variables climáticas/hidrológicas.
 
-#### 📈 Serie temporal (LSTM)
-- Gráfica de pérdida entrenamiento/validación
-- Comparación: temperatura real vs predicha
+Flujo de trabajo: carga y preprocesamiento → entrenamiento → predicción → visualización interactiva.
 
----
+Controles interactivos: umbral de decisión, selección de variables y exploración de escenarios.
+
+</details>
+📊 Resultados
+
+Integración de datos AEMET + CHS (2015–2025).
+
+Modelos con rendimiento satisfactorio y capacidad para detectar patrones meteorológicos relevantes.
+
+Aplicación Streamlit funcional y fácil de usar.
+
+
+💻 Requisitos
+
+Instala las dependencias con:
+
+pip install -r requirements.txt
+
+
+Principales librerías:
+
+Procesamiento: numpy, pandas, xarray, netCDF4
+
+Machine Learning: scikit-learn, tensorflow, keras, imbalanced-learn
+
+Visualización: matplotlib, seaborn, altair, streamlit
+
+Descarga de datos: requests, cdsapi
+
+🚀 Uso
+
+Clonar repositorio:
+
+git clone <https://github.com/Georggdd/Prediccion-Fenomenos-Meteorologicos>
+cd <Prediccion-Fenomenos-Meteorologicos>
+
+
+Instalar dependencias:
+
+pip install -r requirements.txt
+
+
+Ejecutar la app:
+
+streamlit run Scripts/streamlit_app.py
+
+
+Explorar predicciones y variables climáticas/hidrológicas.
+
 
 ## 📁 Estructura del proyecto
 
-proyecto-clima/
+Nueva carpeta/
 │
-├── app.py # Aplicación Streamlit
-├── README.md # Este archivo
-├── src/
-│ └── data/
-│ └── limpios/
-│ └── AEMET/
-│ └── alcantarilla/
-│ ├── diarios/diarios.csv
-│ └── mensuales-anuales/
-│ ├── mensuales.csv
-│ └── anuales.csv
+├── .venv310
+├── scripts/
+│ └── aemet/
+│ └── chs/
+│ └── datos/
+│ └── graficas_modelo/
+│ ├── modelos
+│ └── prediccion_rf.py
+│ ├── streamlit_app.py
+│ └── entrenar_modelo_final.py
+├──src/data
+│ └── aemet/
+│ └── chs/
+├──.gitignore
+├──README
+├──requierements
 
-## 🔧 Requisitos
+👩 Autor
 
-Primero activa tu entorno virtual:
+Florentina Georgiana Dumitru
+Trabajo de Fin de Máster en Big Data e Inteligencia Artificial – Predicción de fenómenos meteorológicos extremos en Murcia.
 
-  .\venv\Scripts\activate
-
-Luego instala las dependencias:
-
-pip install streamlit matplotlib pandas scikit-learn tensorflow
-
-▶️ ¿Cómo ejecutar la app?
-Una vez dentro del entorno virtual y con los paquetes instalados:
-
-streamlit run app.py
-
-Se abrirá automáticamente la app en tu navegador.
-
-✨ Autora del proyecto
-Este trabajo ha sido realizado por Georgiana como parte de su Trabajo de Fin de Máster en Big Data e Inteligencia Artificial, centrado en la predicción de fenómenos meteorológicos extremos mediante técnicas de IA.
+ 
