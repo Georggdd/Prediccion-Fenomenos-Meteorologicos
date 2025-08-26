@@ -61,8 +61,10 @@ Flujo de trabajo: carga y preprocesamiento → entrenamiento → predicción →
 
 Controles interactivos: umbral de decisión, selección de variables y exploración de escenarios.
 
+---
+
 </details>
-📊 # Resultados
+📊 Resultados
 
 Integración de datos AEMET + CHS (2015–2025).
 
@@ -70,6 +72,7 @@ Modelos con rendimiento satisfactorio y capacidad para detectar patrones meteoro
 
 Aplicación Streamlit funcional y fácil de usar.
 
+---
 
 💻 Requisitos
 
@@ -87,6 +90,8 @@ Machine Learning: scikit-learn, tensorflow, keras, imbalanced-learn
 Visualización: matplotlib, seaborn, altair, streamlit
 
 Descarga de datos: requests, cdsapi
+
+---
 
 🚀 Uso
 
@@ -108,6 +113,7 @@ streamlit run Scripts/streamlit_app.py
 
 Explorar predicciones y variables climáticas/hidrológicas.
 
+---
 
 ## 📁 Estructura del proyecto
 
@@ -129,6 +135,8 @@ Nueva carpeta/
 ├──.gitignore
 ├──README
 ├──requierements
+
+---
 
 👩 Autor
 
