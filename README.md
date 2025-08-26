@@ -62,7 +62,7 @@ Flujo de trabajo: carga y preprocesamiento → entrenamiento → predicción →
 Controles interactivos: umbral de decisión, selección de variables y exploración de escenarios.
 
 </details>
-📊 Resultados
+📊 # Resultados
 
 Integración de datos AEMET + CHS (2015–2025).
 
