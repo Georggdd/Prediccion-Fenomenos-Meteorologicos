@@ -143,4 +143,13 @@ Nueva carpeta/
 Florentina Georgiana Dumitru
 Trabajo de Fin de Máster en Big Data e Inteligencia Artificial – Predicción de fenómenos meteorológicos extremos en Murcia.
 
+---
+
+📝 Licencia
+Este proyecto ha sido desarrollado con fines educativos.
+Queda prohibido su uso comercial sin autorización previa
+
+---
+Enlace demo: https://www.youtube.com/watch?v=ePQX9F-lgHg
+
  
